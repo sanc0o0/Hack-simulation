@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+        rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: #000;
+            color: rgb(2, 158, 2);
+            font-family: 'SUSE Mono', monospace;
+        }
+
+        .loading-dots {
+            display: inline-block;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: .2;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: .2;
+            }
+        }
+
+        .loading-dots span {
+            animation-name: blink;
+            animation-duration: 1.4s;
+            animation-iteration-count: infinite;
+            animation-fill-mode: both;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: .2s;
+        }
+
+        .loading-dots span:nth-child(3) {
+            animation-delay: .4s;
+        }
+
+        .initial-content {
+        text-align: center;
+        padding: 20px;
+        color: black;
+    }
+    
+    .question-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px auto;
+        max-width: 500px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="initial-content" id="initialContent">
+        <div class="question-container">
+            <h2>Hey! Do you think our website is beautiful?</h2>
+            <button onclick="handleResponse('yes')">Yes</button>
+            <button onclick="handleResponse('no')">No</button>
+        </div>
+    </div>
+
+
+    <div class="container"></div>
+
+
+
+    <script>
+
+        // Replace your existing JavaScript with this:
+        const container = document.querySelector('.container');
+
+        function createLine(text, loading = false) {
+            const line = document.createElement('h3');
+            if (loading) {
+                line.innerHTML = `${text}<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>`;
+            } else {
+                line.textContent = text;
+            }
+            container.appendChild(line);
+            return line;
+        }
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function hack() {
+            let loadingLine;
+
+            loadingLine = createLine('Initializing Hacking', true);
+            await delay(3000);
+            loadingLine.textContent = 'Initializing Hacking completed.';
+
+            loadingLine = createLine('Establishing secure connection to the mainframe', true);
+            await delay(2000);
+            loadingLine.textContent = 'Connection established.';
+
+            loadingLine = createLine('Bypassing firewall', true);
+            await delay(2000);
+            loadingLine.textContent = 'Firewall bypassed.';
+
+            // Continue this pattern for other messages...
+            loadingLine = createLine('Accessing database', true);
+            await delay(2000);
+            loadingLine.textContent = 'Database accessed.';
+
+            loadingLine = createLine('Extracting data', true);
+            await delay(2000);
+            loadingLine.textContent = 'Data extraction complete.';
+
+            loadingLine = createLine('Uploading data to secure server', true);
+            await delay(2000);
+            loadingLine.textContent = 'Data upload complete.';
+
+            loadingLine = createLine('Completing hack sequence', true);
+            await delay(2000);
+            loadingLine.textContent = 'Hack complete. Disconnecting...';
+
+            loadingLine = createLine('Removing traces', true);
+            await delay(2000);
+            loadingLine.textContent = 'Disconnected. All traces removed.';
+
+            await delay(1000);
+            createLine('Hacking sequence finished.');
+        }
+
+        function handleResponse(answer) {
+                if (answer === 'no') {
+                    const messages = [
+                        "How dare you not like my website! 😠",
+                        "You've made a terrible mistake... 👿",
+                        "Now you'll see what happens to critics! 💀"
+                    ];
+
+                    let messageIndex = 0;
+                    const showMessages = () => {
+                        if (messageIndex < messages.length) {
+                            alert(messages[messageIndex]);
+                            messageIndex++;
+                            setTimeout(showMessages, 1000);
+                        } else {
+                            document.body.style.background = '#000';
+                            document.getElementById('initialContent').style.display = 'none';
+                            hack();
+                        }
+                    };
+                    showMessages();
+                } else {
+                    alert("Thank you for your kindness! But we don't believe you... 😈");
+                    document.body.style.background = '#000';
+                    document.getElementById('initialContent').style.display = 'none';
+                    hack();
+                }
+            }
+        // hack();
+    </script>
+
+</body>
+
+</html>
