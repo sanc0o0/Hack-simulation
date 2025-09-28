@@ -50,24 +50,24 @@
         }
 
         .initial-content {
-        text-align: center;
-        padding: 20px;
-        color: black;
-    }
-    
-    .question-container {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin: 20px auto;
-        max-width: 500px;
-    }
-    
-    button {
-        padding: 10px 20px;
-        margin: 10px;
-        cursor: pointer;
-    }
+            text-align: center;
+            padding: 20px;
+            color: black;
+        }
+
+        .question-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -87,92 +87,113 @@
 
     <script>
 
-        // Replace your existing JavaScript with this:
+        
         const container = document.querySelector('.container');
+
+        
+
+        async function typeWriter(element, text, speed = 50) {
+            for (let i = 0; i < text.length; i++) {
+                element.textContent += text.charAt(i);
+                await delay(speed);
+            }
+        }
 
         function createLine(text, loading = false) {
             const line = document.createElement('h3');
-            if (loading) {
-                line.innerHTML = `${text}<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>`;
-            } else {
-                line.textContent = text;
-            }
             container.appendChild(line);
-            return line;
+            if (loading) {
+                const textSpan = document.createElement('span');
+                const dotsSpan = document.createElement('span');
+                dotsSpan.className = 'loading-dots';
+                dotsSpan.innerHTML = '<span>.</span><span>.</span><span>.</span>';
+                line.appendChild(textSpan);
+                line.appendChild(dotsSpan);
+                return { line, textSpan };
+            }
+            return { line };
         }
 
         function delay(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
 
         async function hack() {
-            let loadingLine;
+            let elements;
 
-            loadingLine = createLine('Initializing Hacking', true);
+            elements = createLine('Initializing Hacking', true);
+            await typeWriter(elements.textSpan, 'Initializing Hacking');
             await delay(3000);
-            loadingLine.textContent = 'Initializing Hacking completed.';
+            elements.line.textContent = 'Initializing Hacking completed.';
 
-            loadingLine = createLine('Establishing secure connection to the mainframe', true);
-            await delay(2000);
-            loadingLine.textContent = 'Connection established.';
+            elements = createLine('Establishing secure connection', true);
+            await typeWriter(elements.textSpan, 'Establishing secure connection');
+            await delay(3000);
+            elements.line.textContent = 'Connection established.';
 
-            loadingLine = createLine('Bypassing firewall', true);
-            await delay(2000);
-            loadingLine.textContent = 'Firewall bypassed.';
+            elements = createLine('Bypassing firewall', true);
+            await typeWriter(elements.textSpan, 'Bypassing firewall');
+            await delay(3000);
+            elements.line.textContent = 'Firewall bypassed.';
 
-            // Continue this pattern for other messages...
-            loadingLine = createLine('Accessing database', true);
-            await delay(2000);
-            loadingLine.textContent = 'Database accessed.';
+            elements = createLine('Accessing database', true);
+            await typeWriter(elements.textSpan, 'Accessing database');
+            await delay(3000);
+            elements.line.textContent = 'Database accessed.';
 
-            loadingLine = createLine('Extracting data', true);
-            await delay(2000);
-            loadingLine.textContent = 'Data extraction complete.';
+            elements = createLine('Extracting data', true);
+            await typeWriter(elements.textSpan, 'Extracting data');
+            await delay(3000);
+            elements.line.textContent = 'Data extraction complete.';
 
-            loadingLine = createLine('Uploading data to secure server', true);
-            await delay(2000);
-            loadingLine.textContent = 'Data upload complete.';
+            elements = createLine('Uploading data to secure server', true);
+            await typeWriter(elements.textSpan, 'Uploading data to secure server');
+            await delay(3000);
+            elements.line.textContent = 'Data upload complete.';
 
-            loadingLine = createLine('Completing hack sequence', true);
-            await delay(2000);
-            loadingLine.textContent = 'Hack complete. Disconnecting...';
+            elements = createLine('Completing hack sequence', true);
+            await typeWriter(elements.textSpan, 'Completing hack sequence');
+            await delay(3000);
+            elements.line.textContent = 'Hack complete. Disconnecting...';
 
-            loadingLine = createLine('Removing traces', true);
-            await delay(2000);
-            loadingLine.textContent = 'Disconnected. All traces removed.';
+            elements = createLine('Removing traces', true);
+            await typeWriter(elements.textSpan, 'Removing traces');
+            await delay(3000);
+            elements.line.textContent = 'Disconnected. All traces removed.';
 
             await delay(1000);
-            createLine('Hacking sequence finished.');
+            elements = createLine('Hacking sequence finished.');
+            await typeWriter(elements.line, 'Hacking sequence finished.');
         }
 
         function handleResponse(answer) {
-                if (answer === 'no') {
-                    const messages = [
-                        "How dare you not like my website! 😠",
-                        "You've made a terrible mistake... 👿",
-                        "Now you'll see what happens to critics! 💀"
-                    ];
+            if (answer === 'no') {
+                const messages = [
+                    "How dare you not like my website! 😠",
+                    "You've made a terrible mistake... 👿",
+                    "Now you'll see what happens to critics! 💀"
+                ];
 
-                    let messageIndex = 0;
-                    const showMessages = () => {
-                        if (messageIndex < messages.length) {
-                            alert(messages[messageIndex]);
-                            messageIndex++;
-                            setTimeout(showMessages, 1000);
-                        } else {
-                            document.body.style.background = '#000';
-                            document.getElementById('initialContent').style.display = 'none';
-                            hack();
-                        }
-                    };
-                    showMessages();
-                } else {
-                    alert("Thank you for your kindness! But we don't believe you... 😈");
-                    document.body.style.background = '#000';
-                    document.getElementById('initialContent').style.display = 'none';
-                    hack();
-                }
+                let messageIndex = 0;
+                const showMessages = () => {
+                    if (messageIndex < messages.length) {
+                        alert(messages[messageIndex]);
+                        messageIndex++;
+                        setTimeout(showMessages, 1000);
+                    } else {
+                        document.body.style.background = '#000';
+                        document.getElementById('initialContent').style.display = 'none';
+                        hack();
+                    }
+                };
+                showMessages();
+            } else {
+                alert("Thank you for your kindness! But we don't believe you... 😈");
+                document.body.style.background = '#000';
+                document.getElementById('initialContent').style.display = 'none';
+                hack();
             }
+        }
         // hack();
     </script>
 
